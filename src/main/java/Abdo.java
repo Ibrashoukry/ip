@@ -2,47 +2,79 @@ import java.util.Scanner;
 
 public class Abdo {
 
-    public static Task processTask(String command) {
-        Task task = new Task(command);
-        Response response = new Response();
-        response.printAddTask(task);
+    public static final int MAX_TASKS = 100;
+
+    public static Task processTask(String command, String type) {
+
+        Printer printer = new Printer();
+        String[] parsedDesc;
+        String description, by, from, to;
+        Task task;
+
+        String unparsedDesc = command.substring(type.length() + 1);
+
+        switch(type) {
+        case "todo":
+            task = new Todo(unparsedDesc);
+            break;
+        case "deadline":
+            parsedDesc = unparsedDesc.split("/by");
+            description = parsedDesc[0].trim();
+            by = parsedDesc[1].trim();
+            task = new Deadline(description, by);
+            break;
+        case "event":
+            parsedDesc = unparsedDesc.split("/from|/to");
+            description = parsedDesc[0].trim();
+            from = parsedDesc[1].trim();
+            to = parsedDesc[2].trim();
+            task = new Event(description, from, to);
+            break;
+        default:
+            task = new Task(command);
+        }
         return task;
     }
 
     public static void main(String[] args) {
-        Response response = new Response();
+
+        Printer printer = new Printer();
         Scanner in = new Scanner(System.in);
-        Task[] tasks = new Task[100];
+        Task[] tasks = new Task[MAX_TASKS];
         int nextTask = 0;
 
-        response.printGreeting();
+        printer.printGreeting();
 
-        System.out.print("> ");
         String command = in.nextLine();
 
         while (!command.equals("bye")) {
             String[] parsedCommand = command.split(" ");
             switch(parsedCommand[0]) {
-            case "":
-                break;
             case "list":
-                System.out.println(response.lineBreak + "Here are the tasks in your list:");
+                System.out.println(printer.lineBreak + "Here are the tasks in your list:");
                 for (int i = 0; i < nextTask; i++) {
-                    System.out.println((i + 1) + ". " + tasks[i].printTask());
+                    System.out.println((i + 1) + ". " + tasks[i].toString());
                 }
-                System.out.print(response.lineBreak);
+                System.out.print(printer.lineBreak);
                 break;
             case "mark":
                 tasks[Integer.parseInt(parsedCommand[1]) - 1].setDone(true);
-                System.out.print(response.lineBreak + "Nice job! Task marked as DONE!\n" + tasks[Integer.parseInt(parsedCommand[1]) - 1].printTask() + "\n" + response.lineBreak);
+                System.out.print(printer.lineBreak + "Nice job! Task marked as DONE!\n" +
+                        tasks[Integer.parseInt(parsedCommand[1]) - 1].toString() + "\n" + printer.lineBreak);
                 break;
             case "unmark":
                 tasks[Integer.parseInt(parsedCommand[1]) - 1].setDone(false);
-                System.out.print(response.lineBreak + "Ahhh! Task marked NOT DONE!\n" + tasks[Integer.parseInt(parsedCommand[1]) - 1].printTask() + "\n" + response.lineBreak);
+                System.out.print(printer.lineBreak + "Ahhh! Task marked NOT DONE!\n" +
+                        tasks[Integer.parseInt(parsedCommand[1]) - 1].toString() + "\n" + printer.lineBreak);
+                break;
+            case "todo":
+            case "deadline":
+            case "event":
+                tasks[nextTask] = processTask(command, parsedCommand[0]);
+                printer.printAddTask(tasks[nextTask], nextTask + 1);
+                nextTask++;
                 break;
             default:
-                tasks[nextTask] = processTask(command);
-                nextTask++;
                 break;
             }
 
@@ -50,7 +82,7 @@ public class Abdo {
             command = in.nextLine();
         }
 
-        response.printExit();
+        printer.printExit();
         in.close();
     }
 }
