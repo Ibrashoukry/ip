@@ -6,8 +6,9 @@ public class Abdo {
 
     /** Processes user input if it one of TODO, EVENT, or DEADLINE and returns a task object with
      * initialized values */
-    public static Task processTask(String command, String type) {
+    public static Task processTask(String command, String type) throws AbdoException{
 
+        Printer printer = new Printer();
         String[] parsedDesc;
         String description, by, from, to;
         Task task;
@@ -19,17 +20,29 @@ public class Abdo {
             task = new Todo(unparsedDesc);
             break;
         case "deadline":
-            parsedDesc = unparsedDesc.split("/by");
-            description = parsedDesc[0].trim();
-            by = parsedDesc[1].trim();
-            task = new Deadline(description, by);
+            try {
+                parsedDesc = unparsedDesc.split("/by");
+                description = parsedDesc[0].trim();
+                by = parsedDesc[1].trim();
+                task = new Deadline(description, by);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new AbdoException(printer.lineBreak +
+                        "Invalid format. Expected: \"deadline {description} /by {due date/time}\"" +
+                        System.lineSeparator() + printer.lineBreak);
+            }
             break;
         case "event":
-            parsedDesc = unparsedDesc.split("/from|/to");
-            description = parsedDesc[0].trim();
-            from = parsedDesc[1].trim();
-            to = parsedDesc[2].trim();
-            task = new Event(description, from, to);
+            try {
+                parsedDesc = unparsedDesc.split("/from|/to");
+                description = parsedDesc[0].trim();
+                from = parsedDesc[1].trim();
+                to = parsedDesc[2].trim();
+                task = new Event(description, from, to);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new AbdoException(printer.lineBreak +
+                        "Incorrect format! Expected: \"event {description} /from {start date/time} /to {end date/time}\"" +
+                        System.lineSeparator() + printer.lineBreak);
+            }
             break;
         default:
             task = new Task(command);
@@ -79,9 +92,13 @@ public class Abdo {
                     break;
                 }
 
-                tasks[nextTask] = processTask(command, parsedCommand[0]);
-                printer.printAddTask(tasks[nextTask], nextTask + 1);
-                nextTask++;
+                try {
+                    tasks[nextTask] = processTask(command, parsedCommand[0]);
+                    printer.printAddTask(tasks[nextTask], nextTask + 1);
+                    nextTask++;
+                } catch (AbdoException e) {
+                    System.out.print(e.getMessage());
+                }
                 break;
             default:
                 System.out.print(printer.lineBreak +
