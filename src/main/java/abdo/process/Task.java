@@ -21,4 +21,12 @@ public class Task {
     public String toString() {
         return "[" + getStatusIcon(isDone) + "] " + description;
     }
+
+    public boolean getIsDone() {
+        return isDone;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
