@@ -8,10 +8,9 @@ import abdo.process.Task;
 import abdo.process.Todo;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Abdo {
-
-    public static final int MAX_TASKS = 100;
 
     /** Processes user input if it one of TODO, EVENT, or DEADLINE and returns a task object with
      * initialized values */
@@ -63,8 +62,7 @@ public class Abdo {
 
         Printer printer = new Printer();
         Scanner in = new Scanner(System.in);
-        Task[] tasks = new Task[MAX_TASKS];
-        int nextTask = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
 
         printer.printGreeting();
 
@@ -75,20 +73,38 @@ public class Abdo {
             switch(parsedCommand[0]) {
             case "list":
                 System.out.println(printer.lineBreak + "Here are the tasks in your list:");
-                for (int i = 0; i < nextTask; i++) {
-                    System.out.println((i + 1) + ". " + tasks[i].toString());
+                for (int i = 0; i < tasks.size(); i++) {
+                    System.out.println((i + 1) + ". " + tasks.get(i).toString());
                 }
                 System.out.print(printer.lineBreak);
                 break;
             case "mark":
-                tasks[Integer.parseInt(parsedCommand[1]) - 1].setDone(true);
+                tasks.get(Integer.parseInt(parsedCommand[1]) - 1).setDone(true);
                 System.out.print(printer.lineBreak + "Nice job! abdo.process.Task marked as DONE!\n" +
-                        tasks[Integer.parseInt(parsedCommand[1]) - 1].toString() + "\n" + printer.lineBreak);
+                        tasks.get(Integer.parseInt(parsedCommand[1]) - 1).toString() + "\n" + printer.lineBreak);
                 break;
             case "unmark":
-                tasks[Integer.parseInt(parsedCommand[1]) - 1].setDone(false);
+                tasks.get(Integer.parseInt(parsedCommand[1]) - 1).setDone(false);
                 System.out.print(printer.lineBreak + "Ahhh! abdo.process.Task marked NOT DONE!\n" +
-                        tasks[Integer.parseInt(parsedCommand[1]) - 1].toString() + "\n" + printer.lineBreak);
+                        tasks.get(Integer.parseInt(parsedCommand[1]) - 1).toString() + "\n" + printer.lineBreak);
+                break;
+            case "delete":
+                // handles error where no other info has been inputted except the command
+                if (parsedCommand.length == 1) {
+                    System.out.print(printer.lineBreak +
+                            "No! You have to add something after \"" + parsedCommand[0] +
+                            "\"" + System.lineSeparator() + printer.lineBreak);
+                    break;
+                } else if (parsedCommand.length > 2) {
+                    System.out.print(printer.lineBreak +
+                            "You doing too much.. just give me a number" + System.lineSeparator() + printer.lineBreak);
+                    break;
+                }
+
+                int taskIndex = Integer.parseInt(parsedCommand[1]) - 1;
+
+                printer.printDeleteTask(tasks.get(taskIndex), tasks.size()-1);
+                tasks.remove(taskIndex);
                 break;
             case "todo":
             case "deadline":
@@ -96,15 +112,14 @@ public class Abdo {
                 // handles error where no other info has been inputted except the command
                 if (parsedCommand.length == 1) {
                     System.out.print(printer.lineBreak +
-                            "I don't understand. You have to give \"" + parsedCommand[0] +
-                            "\" a description!!!" + System.lineSeparator() + printer.lineBreak);
+                            "No! You have to add something after \"" + parsedCommand[0] +
+                            "\"" + System.lineSeparator() + printer.lineBreak);
                     break;
                 }
 
                 try {
-                    tasks[nextTask] = processTask(command, parsedCommand[0]);
-                    printer.printAddTask(tasks[nextTask], nextTask + 1);
-                    nextTask++;
+                    tasks.add(processTask(command, parsedCommand[0]));
+                    printer.printAddTask(tasks.get(tasks.size()-1), tasks.size());
                 } catch (AbdoException e) {
                     System.out.print(e.getMessage());
                 }

@@ -18,4 +18,10 @@ public class Printer {
         System.out.print("  " + task.toString() + "\n" +
                 "Now you have " + numOfTasks + " task(s) in the list.\n" + lineBreak);
     }
+
+    public void printDeleteTask (Task task, int numOfTasks) {
+        System.out.println(lineBreak + "Alr, I deleted the following task from your list. (I hope it's not because you're too lazy to do it...)");
+        System.out.print("  " + task.toString() + "\n" +
+                "Now you have " + numOfTasks + " task(s) in the list.\n" + lineBreak);
+    }
 }
