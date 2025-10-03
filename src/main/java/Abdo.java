@@ -4,9 +4,10 @@ public class Abdo {
 
     public static final int MAX_TASKS = 100;
 
+    /** Processes user input if it one of TODO, EVENT, or DEADLINE and returns a task object with
+     * initialized values */
     public static Task processTask(String command, String type) {
 
-        Printer printer = new Printer();
         String[] parsedDesc;
         String description, by, from, to;
         Task task;
@@ -75,6 +76,8 @@ public class Abdo {
                 nextTask++;
                 break;
             default:
+                System.out.print(printer.lineBreak +
+                        "Not a real command... you should know better!" + System.lineSeparator() + printer.lineBreak);
                 break;
             }
 
