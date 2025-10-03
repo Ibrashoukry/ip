@@ -71,6 +71,14 @@ public class Abdo {
             case "todo":
             case "deadline":
             case "event":
+                // handles error where no other info has been inputted except the command
+                if (parsedCommand.length == 1) {
+                    System.out.print(printer.lineBreak +
+                            "I don't understand. You have to give \"" + parsedCommand[0] +
+                            "\" a description!!!" + System.lineSeparator() + printer.lineBreak);
+                    break;
+                }
+
                 tasks[nextTask] = processTask(command, parsedCommand[0]);
                 printer.printAddTask(tasks[nextTask], nextTask + 1);
                 nextTask++;
