@@ -1,3 +1,5 @@
+package abdo.process;
+
 public class Task {
 
     protected boolean isDone;

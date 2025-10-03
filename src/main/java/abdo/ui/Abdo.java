@@ -1,3 +1,12 @@
+package abdo.ui;
+
+import abdo.process.AbdoException;
+import abdo.process.Deadline;
+import abdo.process.Event;
+import abdo.process.Printer;
+import abdo.process.Task;
+import abdo.process.Todo;
+
 import java.util.Scanner;
 
 public class Abdo {
@@ -6,7 +15,7 @@ public class Abdo {
 
     /** Processes user input if it one of TODO, EVENT, or DEADLINE and returns a task object with
      * initialized values */
-    public static Task processTask(String command, String type) throws AbdoException{
+    public static Task processTask(String command, String type) throws AbdoException {
 
         Printer printer = new Printer();
         String[] parsedDesc;
@@ -73,12 +82,12 @@ public class Abdo {
                 break;
             case "mark":
                 tasks[Integer.parseInt(parsedCommand[1]) - 1].setDone(true);
-                System.out.print(printer.lineBreak + "Nice job! Task marked as DONE!\n" +
+                System.out.print(printer.lineBreak + "Nice job! abdo.process.Task marked as DONE!\n" +
                         tasks[Integer.parseInt(parsedCommand[1]) - 1].toString() + "\n" + printer.lineBreak);
                 break;
             case "unmark":
                 tasks[Integer.parseInt(parsedCommand[1]) - 1].setDone(false);
-                System.out.print(printer.lineBreak + "Ahhh! Task marked NOT DONE!\n" +
+                System.out.print(printer.lineBreak + "Ahhh! abdo.process.Task marked NOT DONE!\n" +
                         tasks[Integer.parseInt(parsedCommand[1]) - 1].toString() + "\n" + printer.lineBreak);
                 break;
             case "todo":

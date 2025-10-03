@@ -1,9 +1,11 @@
+package abdo.process;
+
 public class Printer {
 
-    protected String lineBreak = "~~~~~~~~~~~~~~~~~~~~~~\n";
+    public String lineBreak = "~~~~~~~~~~~~~~~~~~~~~~\n";
 
     public void printGreeting () {
-        System.out.print(lineBreak + "Hello I'm Abdo\n" + "I'm here to assist you *_*\n" + lineBreak);
+        System.out.print(lineBreak + "Hello I'm abdo.ui.Abdo\n" + "I'm here to assist you *_*\n" + lineBreak);
         System.out.print("> ");
     }
 
