@@ -63,7 +63,6 @@ public class Abdo {
         Printer printer = new Printer();
         Scanner in = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
-        int nextTask = 0;
 
         printer.printGreeting();
 
@@ -74,7 +73,7 @@ public class Abdo {
             switch(parsedCommand[0]) {
             case "list":
                 System.out.println(printer.lineBreak + "Here are the tasks in your list:");
-                for (int i = 0; i < nextTask; i++) {
+                for (int i = 0; i < tasks.size(); i++) {
                     System.out.println((i + 1) + ". " + tasks.get(i).toString());
                 }
                 System.out.print(printer.lineBreak);
@@ -88,6 +87,24 @@ public class Abdo {
                 tasks.get(Integer.parseInt(parsedCommand[1]) - 1).setDone(false);
                 System.out.print(printer.lineBreak + "Ahhh! abdo.process.Task marked NOT DONE!\n" +
                         tasks.get(Integer.parseInt(parsedCommand[1]) - 1).toString() + "\n" + printer.lineBreak);
+                break;
+            case "delete":
+                // handles error where no other info has been inputted except the command
+                if (parsedCommand.length == 1) {
+                    System.out.print(printer.lineBreak +
+                            "No! You have to add something after \"" + parsedCommand[0] +
+                            "\"" + System.lineSeparator() + printer.lineBreak);
+                    break;
+                } else if (parsedCommand.length > 2) {
+                    System.out.print(printer.lineBreak +
+                            "You doing too much.. just give me a number" + System.lineSeparator() + printer.lineBreak);
+                    break;
+                }
+
+                int taskIndex = Integer.parseInt(parsedCommand[1]) - 1;
+
+                printer.printDeleteTask(tasks.get(taskIndex), tasks.size()-1);
+                tasks.remove(taskIndex);
                 break;
             case "todo":
             case "deadline":
