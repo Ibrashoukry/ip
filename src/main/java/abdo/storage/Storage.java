@@ -20,6 +20,21 @@ public class Storage {
 
     public Storage(String filePath) {
         this.file = new File(filePath);
+        File parentDir = file.getParentFile();
+
+        // creates new parent folder if directory doesn't exist
+        if (!parentDir.exists()) {
+            parentDir.mkdirs();
+        }
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to create file!");
+            }
+        }
+
     }
 
     /**
