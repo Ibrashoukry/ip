@@ -22,7 +22,13 @@ public class Storage {
         this.file = new File(filePath);
     }
 
-    // Makes changes to the file whenever an addition or deletion is done
+    /**
+     * Overwrites file at given path with new task list.
+     *
+     * @param tasks current tasks list with new changes.
+     * @return NaN
+     * @throws IOException If file does not exist.
+     */
     public void updateFile(ArrayList<Task> tasks) throws IOException {
 
         FileWriter fw = new FileWriter(file);
@@ -45,7 +51,12 @@ public class Storage {
         fw.close();
     }
 
-    // Populates the tasks list if it is the beginning of the session
+    /**
+     * Returns a list of tasks created from the stored file.
+     *
+     * @return list of tasks.
+     * @throws AbdoException If file is not found.
+     */
     public ArrayList<Task> load() throws AbdoException {
         ArrayList<Task> tasks = new ArrayList<>();
         Ui ui = new Ui();

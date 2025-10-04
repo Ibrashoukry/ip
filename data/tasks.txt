@@ -1,3 +1,2 @@
 D|1|asdfs|august 3
-T|1|finish this thing
 T|0|don't finish this list

@@ -32,10 +32,23 @@ public class AddCommand extends Command {
         this.type = parsedCommand[0];
     }
 
+    /**
+     * Creates a Todo object from user command.
+     *
+     * @param unparsedDesc string list from user input
+     * @return the created Todo object
+     */
     private Todo createTodo(String unparsedDesc) {
         return new Todo(unparsedDesc);
     }
 
+    /**
+     * Parses user command and returns Deadline object from
+     * that input.
+     *
+     * @param unparsedDesc string list from user input
+     * @return the created Deadline object
+     */
     private Deadline createDeadline(String unparsedDesc) {
         String[] parsedDesc = unparsedDesc.split("/by");
         description = parsedDesc[0].trim();
@@ -43,6 +56,13 @@ public class AddCommand extends Command {
         return new Deadline(description, by);
     }
 
+    /**
+     * Parses user command and returns Event object from
+     * that input.
+     *
+     * @param unparsedDesc string list from user input
+     * @return the created Event object
+     */
     private Event createEvent(String unparsedDesc) {
         String[] parsedDesc = unparsedDesc.split("/from|/to");
         description = parsedDesc[0].trim();
@@ -51,10 +71,13 @@ public class AddCommand extends Command {
         return new Event(description, from, to);
     }
 
-    public boolean isExit() {
-        return false;
-    }
-
+    /**
+     * Processes the input and creates the corresponding task.
+     *
+     * @param ui the UI handler
+     * @return the created task
+     * @throws AbdoException if task creation fails due to invalid input
+     */
     public Task processTask(Ui ui) throws AbdoException {
         Task task;
         String unparsedDesc = command.substring(type.length() + 1);
@@ -84,6 +107,13 @@ public class AddCommand extends Command {
         return task;
     }
 
+    /**
+     * Executes the add command, adding a task to the list and saving it.
+     *
+     * @param tasks the task list
+     * @param ui the UI handler
+     * @param storage the storage handler
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
 

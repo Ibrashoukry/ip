@@ -21,6 +21,14 @@ public class FindCommand extends Command {
         this.keyword = parsedCommand[1];
     }
 
+    /**
+     * Executes the find command, finding the tasks that contain
+     * the specified keyword and prints out results.
+     *
+     * @param tasks the task list
+     * @param ui the UI handler
+     * @param storage he storage handler
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
 

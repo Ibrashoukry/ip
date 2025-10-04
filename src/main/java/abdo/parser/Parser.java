@@ -12,6 +12,12 @@ import abdo.ui.Ui;
 
 public class Parser {
 
+    /**
+     * Parses a raw input string and returns the corresponding Command object.
+     *
+     * @param command the raw user input
+     * @return a Command object corresponding to the parsed input
+     */
     public static Command parse(String command) {
         Ui ui = new Ui();
         Command c;

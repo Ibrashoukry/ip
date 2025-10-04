@@ -6,6 +6,13 @@ import abdo.ui.Ui;
 
 public class ListCommand extends Command{
 
+    /**
+     * Executes the list command, printing the tasks from the list of tasks.
+     *
+     * @param tasks the task list
+     * @param ui the UI handler
+     * @param storage the storage handler
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         if (tasks.checkEmpty()) {
