@@ -54,7 +54,7 @@ public class Ui {
 
     public void printDeleteTask (Task task, int numOfTasks) {
         System.out.println(LINEBREAK +
-                "Alr, I deleted the following abdo.task from your list. (I hope it's not because you're too lazy to do it...)");
+                "Alr, I deleted the following abdo.task from your list." + NL + "(I hope it's not because you're too lazy to do it...)");
         System.out.print("  " + task.toString() + NL + "Now you have " +
                 numOfTasks + " task(s) in the list." + NL + LINEBREAK);
     }
