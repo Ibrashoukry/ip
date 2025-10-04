@@ -1,6 +1,6 @@
-package abdo.process;
+package abdo.task;
 
-public class Task {
+public abstract class Task {
 
     protected boolean isDone;
     protected String description;
