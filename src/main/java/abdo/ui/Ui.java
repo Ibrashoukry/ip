@@ -59,6 +59,9 @@ public class Ui {
                 numOfTasks + " task(s) in the list." + NL + LINEBREAK);
     }
 
+    /**
+     * Prints error message when creating a new file.
+     */
     public void printLoadingError () {
         System.out.println(LINEBREAK + "File not found! Creating new file..." + NL);
     }
