@@ -13,6 +13,7 @@ public class FindCommand extends Command {
 
     public FindCommand(Ui ui, String[] parsedCommand) {
         if (parsedCommand.length == 1) {
+
             this.hasNoArgs = true;
             ui.printNoArgs(parsedCommand[0]);
             return;
