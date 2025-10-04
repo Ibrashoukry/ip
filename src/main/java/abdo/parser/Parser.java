@@ -4,6 +4,7 @@ import abdo.command.AddCommand;
 import abdo.command.Command;
 import abdo.command.DeleteCommand;
 import abdo.command.ExitCommand;
+import abdo.command.FindCommand;
 import abdo.command.InvalidCommand;
 import abdo.command.ListCommand;
 import abdo.command.StatusCommand;
@@ -23,6 +24,9 @@ public class Parser {
             break;
         case "list":
             c = new ListCommand();
+            break;
+        case "find":
+            c = new FindCommand(ui, parsedCommand);
             break;
         case "mark":
         case "unmark":

@@ -4,6 +4,7 @@ import abdo.AbdoException;
 import abdo.task.Task;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
@@ -41,7 +42,7 @@ public class Ui {
     }
 
     public void printExit () {
-        System.out.println(LINEBREAK + "Bye. Come back for more help ;)" + NL + LOGO);
+        System.out.println(LINEBREAK + "Bye. Come back for more help ;)" + NL + NL + LOGO);
     }
 
     public void printAddTask (Task task, int numOfTasks) {
@@ -86,6 +87,33 @@ public class Ui {
     public void printError(AbdoException e) {
         printBreak();
         System.out.print(e.getMessage());
+        printBreak();
+    }
+
+    public void printFound(ArrayList<String> tasks) {
+        printBreak();
+        System.out.println("Is this what you want?!?");
+        for (String task : tasks) {
+            System.out.println(task);
+        }
+        printBreak();
+    }
+
+    public void printNotFound() {
+        printBreak();
+        System.out.println("Sorry brother ); No task exists with this keyword");
+        printBreak();
+    }
+
+    public void printOOB() {
+        printBreak();
+        System.out.print("Out of bounds! Try again bromi." + NL);
+        printBreak();
+    }
+
+    public void printInvalidNumArg() {
+        printBreak();
+        System.out.print("That's not a number shmoski!" + NL);
         printBreak();
     }
 

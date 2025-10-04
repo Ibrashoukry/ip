@@ -9,21 +9,30 @@ import java.io.IOException;
 public class StatusCommand extends Command {
 
     private String action;
-    private int index;
+    private String indexString;
+    private boolean hasNoArgs;
 
     public StatusCommand(Ui ui, String[] parsedCommand) {
         if (parsedCommand.length == 1) {
+            this.hasNoArgs = true;
             ui.printNoArgs(parsedCommand[0]);
+            return;
         }
 
         this.action = parsedCommand[0];
-        this.index = Integer.parseInt(parsedCommand[1]) - 1;
+        this.indexString = parsedCommand[1];
     }
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
 
+        if (hasNoArgs) {
+            return;
+        }
+
         try {
+            int index = Integer.parseInt(indexString) - 1;
+
             boolean isDone = action.equals("mark");
 
             tasks.getTask(index).setDone(isDone);
@@ -31,11 +40,12 @@ public class StatusCommand extends Command {
             ui.printBreak();
 
             if (isDone) {
-                System.out.print("Nice job! Task marked as DONE!");
+                System.out.print("Nice job habibi! Task marked as DONE!");
             } else {
-                System.out.print("Ahhh! Task marked NOT DONE!");
+                System.out.print("Ahhh, you're not by habibi nomo! Task marked NOT DONE!");
             }
             System.out.print(ui.NL + tasks.getTask(index).toString() + ui.NL);
+
             ui.printBreak();
 
             try {
@@ -46,17 +56,9 @@ public class StatusCommand extends Command {
             }
 
         } catch (IndexOutOfBoundsException e) {
-
-            ui.printBreak();
-            System.out.print("Out of bounds! Try again." + System.lineSeparator());
-            ui.printBreak();
-
+            ui.printOOB();
         } catch (NumberFormatException e) {
-
-            ui.printBreak();
-            System.out.print("That's not a number!" + System.lineSeparator());
-            ui.printBreak();
-
+            ui.printInvalidNumArg();
         }
     }
 }

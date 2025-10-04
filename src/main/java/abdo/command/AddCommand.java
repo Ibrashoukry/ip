@@ -19,10 +19,13 @@ public class AddCommand extends Command {
     private String by;
     private String from;
     private String to;
+    private boolean hasNoArgs;
 
     public AddCommand(Ui ui, String command, String[] parsedCommand) {
         if (parsedCommand.length == 1) {
+            this.hasNoArgs = true;
             ui.printNoArgs(parsedCommand[0]);
+            return;
         }
 
         this.command = command;
@@ -83,6 +86,11 @@ public class AddCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
+
+        if (hasNoArgs) {
+            return;
+        }
+
         try {
             tasks.addTask(processTask(ui));
             ui.printAddTask(tasks.getTask(tasks.getSize()-1), tasks.getSize());
